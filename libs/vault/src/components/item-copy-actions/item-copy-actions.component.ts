@@ -30,6 +30,9 @@ export class VaultItemCopyActionsComponent {
 
   readonly showQuickCopyActions = input(false);
 
+  /** Disables all copy actions, e.g. while the containing list is refreshing. */
+  readonly disabled = input(false);
+
   protected readonly CipherViewLikeUtils = CipherViewLikeUtils;
   protected readonly CipherType = CipherType;
 
