@@ -122,6 +122,10 @@ export class Fido2AuthenticatorService<
           `[Fido2Authenticator] Aborting due to excluded credential found in vault.`,
         );
         await userInterfaceSession.informExcludedCredential(existingCipherIds);
+        // TODO(PM-30875): Report this as a distinct "credential excluded" error
+        // (CTAP2's CredentialExcluded / WebAuthn's InvalidStateError) instead of the
+        // generic NotAllowed, so the relying party can tell an already-registered
+        // credential apart from a rejected ceremony.
         throw new Fido2AuthenticatorError(Fido2AuthenticatorErrorCode.NotAllowed);
       }
 

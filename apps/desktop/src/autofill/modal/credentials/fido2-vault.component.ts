@@ -21,7 +21,6 @@ import { BitwardenShield } from "@bitwarden/assets/svg";
 import { AccountService } from "@bitwarden/common/auth/abstractions/account.service";
 import { LogService } from "@bitwarden/common/platform/abstractions/log.service";
 import { CipherService } from "@bitwarden/common/vault/abstractions/cipher.service";
-import { CipherRepromptType } from "@bitwarden/common/vault/enums";
 import { CipherView } from "@bitwarden/common/vault/models/view/cipher.view";
 import {
   BadgeModule,
@@ -36,7 +35,6 @@ import {
   SectionHeaderComponent,
 } from "@bitwarden/components";
 import { I18nPipe } from "@bitwarden/ui-common";
-import { PasswordRepromptService } from "@bitwarden/vault";
 
 import { DesktopSettingsService } from "../../../platform/services/desktop-settings.service";
 import {
@@ -79,7 +77,6 @@ export class Fido2VaultComponent implements OnInit, OnDestroy {
     private readonly accountService: AccountService,
     private readonly dialogService: DialogService,
     private readonly logService: LogService,
-    private readonly passwordRepromptService: PasswordRepromptService,
     private readonly router: Router,
   ) {}
 
@@ -108,8 +105,7 @@ export class Fido2VaultComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const isConfirmed = await this.validateCipherAccess(cipher);
-    this.session.confirmChosenCipher(cipher.id, isConfirmed);
+    this.session.confirmChosenCipher(cipher);
 
     await this.closeModal();
   }
@@ -155,13 +151,5 @@ export class Fido2VaultComponent implements OnInit, OnDestroy {
         next: (ciphers) => this.ciphersSubject.next(ciphers as CipherView[]),
         error: (error: unknown) => this.logService.error("Failed to load ciphers", error),
       });
-  }
-
-  private async validateCipherAccess(cipher: CipherView): Promise<boolean> {
-    if (cipher.reprompt !== CipherRepromptType.None) {
-      return this.passwordRepromptService.showPasswordPrompt();
-    }
-
-    return true;
   }
 }
