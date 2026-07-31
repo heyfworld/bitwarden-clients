@@ -6151,5 +6151,47 @@
         "example": "Login"
       }
     }
+  },
+  "confirmPasskeyRegistrationMacOS": {
+    "message": "create a new $RPID$ passkey for $USERNAME$",
+    "description": "Prompt for the user to create an existing passkey, completing the sentence \"Bitwarden is trying to...\".",
+    "placeholders": {
+      "rpId": {
+        "content": "$1",
+        "example": "example.com"
+      },
+      "username": {
+        "content": "$2",
+        "example": "user@acme.com"
+      }
+    }
+  },
+  "confirmPasskeyOverwriteMacOS": {
+    "message": "overwrite a $RPID$ passkey for $USERNAME$",
+    "description": "Prompt for the user to overwrite an existing passkey, completing the sentence \"Bitwarden is trying to...\".",
+    "placeholders": {
+      "rpId": {
+        "content": "$1",
+        "example": "example.com"
+      },
+      "username": {
+        "content": "$2",
+        "example": "user@acme.com"
+      }
+    }
+  },
+  "confirmPasskeyAssertionMacOS": {
+    "message": "sign in as $USERNAME$ with your $RPID$ passkey",
+    "description": "Prompt for the user to use a passkey, completing the sentence \"Bitwarden is trying to...\".",
+    "placeholders": {
+      "rpId": {
+        "content": "$1",
+        "example": "example.com"
+      },
+      "username": {
+        "content": "$2",
+        "example": "user@acme.com"
+      }
+    }
   }
 }
