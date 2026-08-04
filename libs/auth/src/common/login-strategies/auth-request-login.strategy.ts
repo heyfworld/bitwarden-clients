@@ -78,6 +78,7 @@ export class AuthRequestLoginStrategy extends LoginStrategy {
   protected override async unlock(response: IdentityTokenResponse, userId: UserId): Promise<void> {
     const authRequestCredentials = this.cache.value.authRequestCredentials;
     await this.masterPasswordService.setMasterKeyEncryptedUserKey(response.key, userId);
+    // eslint-disable-next-line @bitwarden/key-management/no-set-user-key -- login with device: the approving device supplies an already-decrypted user key, so this is part of login rather than a manual unlock
     await this.keyService.setUserKey(authRequestCredentials.decryptedUserKey, userId);
     // Establish trust if required after setting user key
     await this.deviceTrustService.trustDeviceIfRequired(userId);

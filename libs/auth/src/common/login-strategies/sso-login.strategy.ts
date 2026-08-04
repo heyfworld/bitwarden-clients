@@ -322,6 +322,7 @@ export class SsoLoginStrategy extends LoginStrategy {
     );
 
     if (userKey) {
+      // eslint-disable-next-line @bitwarden/key-management/no-set-user-key -- TDE unlock during SSO login; the user key comes from DeviceTrustService.decryptUserKeyWithDeviceKey
       await this.keyService.setUserKey(userKey, userId);
     }
   }
@@ -340,6 +341,7 @@ export class SsoLoginStrategy extends LoginStrategy {
     }
 
     const userKey = await this.masterPasswordService.decryptUserKeyWithMasterKey(masterKey, userId);
+    // eslint-disable-next-line @bitwarden/key-management/no-set-user-key -- SSO unlock with the master-key-decrypted user key, performed as part of the login flow rather than a manual unlock
     await this.keyService.setUserKey(userKey, userId);
   }
 

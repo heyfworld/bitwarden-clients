@@ -159,6 +159,7 @@ export class AuthRequestService implements AuthRequestServiceAbstraction {
       authReqResponse.key,
       authReqPrivateKey,
     );
+    // eslint-disable-next-line @bitwarden/key-management/no-set-user-key -- an approved auth request returns the user key wrapped to this device's key; unlock happens as part of login
     await this.keyService.setUserKey(userKey, userId);
   }
 

@@ -32,6 +32,7 @@ export class UserAutoUnlockKeyService {
       return false;
     }
 
+    // eslint-disable-next-line @bitwarden/key-management/no-set-user-key -- restores the never-lock (auto) user key into memory during bootstrap so the vault loads unlocked; see the TODO above about folding this into the keyService
     await this.keyService.setUserKey(autoUserKey, userId);
     return true;
   }

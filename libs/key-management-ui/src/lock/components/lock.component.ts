@@ -536,6 +536,7 @@ export class LockComponent implements OnInit, OnDestroy {
     // Add a mark to indicate that the user has unlocked their vault. A good starting point for measuring unlock performance.
     this.logService.mark("Vault unlocked");
 
+    // eslint-disable-next-line @bitwarden/key-management/no-set-user-key -- shared tail of the lock screen's unlock methods; migrating this component to UnlockService is in progress
     await this.keyService.setUserKey(key, this.activeAccount.id);
 
     // Now that we have a decrypted user key in memory, we can check if we

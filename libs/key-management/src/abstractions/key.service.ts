@@ -62,6 +62,10 @@ export abstract class KeyService {
    * any other necessary versions (such as auto, biometrics,
    * or pin)
    *
+   * @deprecated Setting the user key directly is prohibited. All manual unlocks must go through
+   * `UnlockService` in `@bitwarden/unlock`; if you already hold a decrypted user key, use
+   * `UnlockService.unlockWithDecryptedUserKey`. Reach out to the KM team if neither fits.
+   * New call sites are blocked by the `@bitwarden/key-management/no-set-user-key` ESLint rule.
    * @throws Error when key or userId is null. Lock the account to clear a key.
    * @param key The user key to set
    * @param userId The desired user

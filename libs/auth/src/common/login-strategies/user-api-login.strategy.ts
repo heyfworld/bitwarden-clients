@@ -90,6 +90,7 @@ export class UserApiLoginStrategy extends LoginStrategy {
           masterKey,
           userId,
         );
+        // eslint-disable-next-line @bitwarden/key-management/no-set-user-key -- API key login with Key Connector derives the user key from the master key before an SDK unlock is available
         await this.keyService.setUserKey(userKey, userId);
       }
     }

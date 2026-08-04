@@ -153,8 +153,9 @@ apps/web/src/translation-constants.ts  @bitwarden/team-platform-dev
 .github/workflows/cherry-pick.yml                       @bitwarden/team-platform-dev
 
 # ESLint custom rules
-libs/eslint             @bitwarden/team-platform-dev
-libs/eslint/components  @bitwarden/team-ui-foundation
+libs/eslint                 @bitwarden/team-platform-dev
+libs/eslint/components      @bitwarden/team-ui-foundation
+libs/eslint/key-management  @bitwarden/team-key-management-dev
 # Typescript tooling
 tsconfig.base.json  @bitwarden/team-platform-dev
 nx.json             @bitwarden/team-platform-dev

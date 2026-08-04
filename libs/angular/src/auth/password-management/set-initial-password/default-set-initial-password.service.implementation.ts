@@ -329,6 +329,8 @@ export class DefaultSetInitialPasswordService implements SetInitialPasswordServi
     );
     await this.masterPasswordService.setMasterPasswordUnlockData(masterPasswordUnlockData, userId);
 
+    // eslint-disable-next-line @bitwarden/key-management/no-set-user-key -- a TDE user setting their initial password is unlocked with the user key returned by the SDK registration call above
+    this.
     await this.keyService.setUserKey(
       SymmetricCryptoKey.fromString(registerResult.user_key) as UserKey,
       userId,
@@ -471,6 +473,8 @@ export class DefaultSetInitialPasswordService implements SetInitialPasswordServi
       masterKeyEncryptedUserKey[1],
       userId,
     );
+    // [PM-23246] "Legacy" master key setting path - to be removed once unlock path migration is complete
+    // eslint-disable-next-line @bitwarden/key-management/no-set-user-key -- goes away with the deprecated setInitialPassword() this method supports
     await this.keyService.setUserKey(masterKeyEncryptedUserKey[0], userId);
   }
 

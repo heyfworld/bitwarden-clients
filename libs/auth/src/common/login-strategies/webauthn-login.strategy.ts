@@ -95,6 +95,7 @@ export class WebAuthnLoginStrategy extends LoginStrategy {
       );
 
       if (userKey) {
+        // eslint-disable-next-line @bitwarden/key-management/no-set-user-key -- WebAuthn PRF login decrypts the user key locally during login; there is no SDK unlock path for PRF yet
         await this.keyService.setUserKey(userKey as UserKey, userId);
       }
     }

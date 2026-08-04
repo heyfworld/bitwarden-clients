@@ -112,6 +112,7 @@ export class BackgroundBrowserBiometricsService extends BiometricsService {
           }
 
           await this.biometricStateService.setBiometricUnlockEnabled(true, userId);
+          // eslint-disable-next-line @bitwarden/key-management/no-set-user-key -- Browser biometrics will be removed once shared unlock is rolled out
           await this.keyService.setUserKey(userKey, userId);
           // to update badge and other things
           this.messagingService.send("switchAccount", { userId });

@@ -101,6 +101,10 @@ export class DefaultKeyService implements KeyServiceAbstraction {
     ) as Observable<Record<OrganizationId, OrgKey>>;
   }
 
+  /**
+   * @deprecated Setting the user key directly is prohibited.
+   * See {@link KeyServiceAbstraction.setUserKey}.
+   */
   async setUserKey(key: UserKey, userId: UserId): Promise<void> {
     if (key == null) {
       throw new Error("No key provided. Lock the user to clear the key");
@@ -133,6 +137,7 @@ export class DefaultKeyService implements KeyServiceAbstraction {
       throw new Error("No user key found for: " + userId);
     }
 
+    // eslint-disable-next-line @bitwarden/key-management/no-set-user-key -- internal to refreshAdditionalKeys: re-runs the in-memory key through the additional-key storage path
     await this.setUserKey(key, userId);
   }
 
@@ -518,6 +523,7 @@ export class DefaultKeyService implements KeyServiceAbstraction {
       throw new Error("Failed to create valid private key.");
     }
 
+    // eslint-disable-next-line @bitwarden/key-management/no-set-user-key -- initAccount seeds the freshly generated user key into state; there is no SDK account-initialization path yet
     await this.setUserKey(userKey, userId);
     await this.accountCryptographyStateService.setAccountCryptographicState(
       {

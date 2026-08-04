@@ -386,6 +386,7 @@ export class LoginDecryptionOptionsComponent implements OnInit {
         );
 
         // Set user key - user is now unlocked
+        // eslint-disable-next-line @bitwarden/key-management/no-set-user-key -- TDE registration returns the user key from the SDK and unlocks the just-registered device in place; UnlockService has no equivalent path
         await this.keyService.setUserKey(
           SymmetricCryptoKey.fromString(register_result.user_key) as UserKey,
           userId,

@@ -271,6 +271,7 @@ export class KeyConnectorService implements KeyConnectorServiceAbstraction {
       SymmetricCryptoKey.fromString(result.key_connector_key) as MasterKey,
       userId,
     );
+    // eslint-disable-next-line @bitwarden/key-management/no-set-user-key -- new SSO user conversion to Key Connector; the SDK registration call above returns the user key for immediate unlock
     await this.keyService.setUserKey(
       SymmetricCryptoKey.fromString(result.user_key) as UserKey,
       userId,
@@ -306,6 +307,7 @@ export class KeyConnectorService implements KeyConnectorServiceAbstraction {
     await this.masterPasswordService.setMasterKey(masterKey, userId);
 
     const userKey = await this.keyService.makeUserKey(masterKey);
+    // eslint-disable-next-line @bitwarden/key-management/no-set-user-key -- V1 Key Connector conversion generates the user key from the newly created master key, so there is nothing for UnlockService to unlock yet
     await this.keyService.setUserKey(userKey[0], userId);
     await this.masterPasswordService.setMasterKeyEncryptedUserKey(userKey[1], userId);
 

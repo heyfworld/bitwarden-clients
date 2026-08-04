@@ -14,6 +14,7 @@ import jest from "eslint-plugin-jest";
 
 import platformPlugins from "./libs/eslint/platform/index.mjs";
 import componentPlugins from "./libs/eslint/components/index.mjs";
+import keyManagementPlugins from "./libs/eslint/key-management/index.mjs";
 
 export default tseslint.config(
   ...storybook.configs["flat/recommended"],
@@ -37,6 +38,7 @@ export default tseslint.config(
       "rxjs-angular": fixupPluginRules(angularRxjs),
       "@bitwarden/platform": platformPlugins,
       "@bitwarden/components": componentPlugins,
+      "@bitwarden/key-management": keyManagementPlugins,
     },
     languageOptions: {
       parserOptions: {
@@ -647,6 +649,21 @@ export default tseslint.config(
     files: ["libs/**/*.ts", "bitwarden_license/bit-common/src/**/*.ts"],
     rules: {
       "@bitwarden/platform/no-self-package-import": "error",
+    },
+  },
+
+  // KeyService.setUserKey is deprecated and closed to new callers: all manual unlocks must go
+  // through UnlockService (@bitwarden/unlock). The existing call sites each carry an
+  // `eslint-disable-next-line` with a justification.
+  {
+    files: ["**/*.ts"],
+    ignores: [
+      // The deprecated method's own unit tests.
+      "libs/key-management/src/key.service.spec.ts",
+      "apps/desktop/src/key-management/electron-key.service.spec.ts",
+    ],
+    rules: {
+      "@bitwarden/key-management/no-set-user-key": "error",
     },
   },
 
